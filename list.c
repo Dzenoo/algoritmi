@@ -83,6 +83,31 @@ void printList(Node* head) {
     printf("NULL\n");
 }
 
+// Funkcija za sortiranje liste koristeći Bubble Sort
+void sortList(Node** head) {
+    int swapped;
+    Node* ptr1;
+    Node* lptr = NULL;
+
+    if (*head == NULL) return;
+
+    do {
+        swapped = 0;
+        ptr1 = *head;
+
+        while (ptr1->next != lptr) {
+            if (ptr1->data > ptr1->next->data) {
+                int temp = ptr1->data;
+                ptr1->data = ptr1->next->data;
+                ptr1->next->data = temp;
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    } while (swapped);
+}
+
 // Glavni program za testiranje
 int main() {
     Node* head = NULL; // Inicijalizacija prazne liste
