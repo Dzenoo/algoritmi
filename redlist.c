@@ -47,7 +47,6 @@ void enqueue(Queue* queue, int item) {
     queue->rear = newNode;
     printf("%d dodato u red\n", item);
 }
-
 // Funkcija za uklanjanje elementa sa početka reda
 int dequeue(Queue* queue) {
     if (isQueueEmpty(queue)) {

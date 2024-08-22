@@ -112,6 +112,26 @@ void sortList(Node** head) {
     } while (swapped);
 }
 
+// Funkcija za pronalaženje maksimalnog elementa u kružno ulančanoj listi
+int findMax(Node* head) {
+    if (head == NULL) {
+        printf("Lista je prazna.\n");
+        return -1;
+    }
+
+    int max = head->data;
+    Node* temp = head->next;
+
+    while (temp != head) {
+        if (temp->data > max) {
+            max = temp->data;
+        }
+        temp = temp->next;
+    }
+
+    return max;
+}
+
 // Glavni program za testiranje
 int main() {
     Node* head = NULL; // Inicijalizacija prazne liste

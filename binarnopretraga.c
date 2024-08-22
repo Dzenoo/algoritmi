@@ -84,7 +84,6 @@ void inorderTraversal(Node* root) {
         inorderTraversal(root->right);
     }
 }
-
 // Glavni program za testiranje
 int main() {
     Node* root = NULL;

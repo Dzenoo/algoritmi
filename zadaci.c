@@ -151,3 +151,111 @@ int main() {
 
     return 0;
 }
+
+// 2 Zadatak
+typedef struct DNode {
+    int data;
+    struct DNode* next;
+    struct DNode* prev;
+} DNode;
+
+typedef struct SNode {
+    int data;
+    struct SNode* next;
+} SNode;
+
+SNode* createSNode(int data) {
+    SNode* newNode = (SNode*)malloc(sizeof(SNode));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void insertAtEndS(SNode** head, int data) {
+    SNode* newNode = createSNode(data);
+    if(head == NULL) {
+        head = newNode;
+        return;
+    }
+    Node* temp = *head;
+    
+    while(temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp-next = newNode;
+}
+
+void printList(SNode* head) {
+    SNode temp = head;
+    while(temp != NULL) {
+        printf("%d ->", temp->data);
+    }
+}
+
+DNode createDNode(int data) {
+    DNode* newNode = (DNode*)malloc(sizeof(DNode));
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+} 
+
+void insertAtEndD(DNode** head, int data) {
+    DNode* newNode = createDNode(data);
+    if(head == NULL) {
+        head = newNode;
+        return;
+    }
+    Node* temp = *head;
+    
+    while(temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    newNode->prev = temp;
+}
+
+void printDList(DNode* head) {
+    DNode* temp = head;
+    while (temp != NULL) {
+        printf("%d <-> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+void transferOddPositions(DNode* dHead, SNode* sHead) {
+    int position = 1;
+    DNode* temp = dHead;
+
+    while(temp != NULL) {
+        if(position % 2 !== 0) {
+            insertAtEndS(sHead, temp->data);
+        }
+            temp = temp->next;
+            position++;
+    }
+}
+
+int main() {
+    DNode* dHead = NULL;  // Dvostruko ulančana lista
+    SNode* sHead = NULL;  // Jednostruko ulančana lista
+
+    // Dodavanje elemenata u dvostruko ulančanu listu
+    insertAtEndD(&dHead, 10);
+    insertAtEndD(&dHead, 20);
+    insertAtEndD(&dHead, 30);
+    insertAtEndD(&dHead, 40);
+    insertAtEndD(&dHead, 50);
+
+    printf("Dvostruko ulančana lista:\n");
+    printDList(dHead);
+
+    // Prebacivanje elemenata sa neparnih pozicija u jednostruko ulančanu listu
+    transferOddPositions(dHead, &sHead);
+
+    printf("Jednostruko ulančana lista sa elementima sa neparnih pozicija:\n");
+    printSList(sHead);
+
+    return 0;
+}
+
