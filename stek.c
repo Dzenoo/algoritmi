@@ -1,3 +1,4 @@
+// MORA DA SE ZNA NAPAMET
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h> // Za korišćenje INT_MIN

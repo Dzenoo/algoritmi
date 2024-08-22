@@ -1,3 +1,4 @@
+// MORA DA SE ZNA NAPAMET
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -36,6 +37,18 @@ void insertAtEnd(Node** head, int data) {
     temp->next = newNode;
 }
 
+// Funkcija za ispis liste
+void printList(Node* head) {
+    Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+// NE MORA DA SE ZNA NAPAMET
+
 // Brisanje cvora sa odredjene pozicije
 void deleteNode(Node** head, int position) {
     if (*head == NULL) return;
@@ -73,15 +86,6 @@ int searchNode(Node* head, int key) {
     return -1; // Vrednost nije pronađena
 }
 
-// Funkcija za ispis liste
-void printList(Node* head) {
-    Node* temp = head;
-    while (temp != NULL) {
-        printf("%d -> ", temp->data);
-        temp = temp->next;
-    }
-    printf("NULL\n");
-}
 
 // Funkcija za sortiranje liste koristeći Bubble Sort
 void sortList(Node** head) {

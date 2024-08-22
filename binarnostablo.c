@@ -1,3 +1,4 @@
+// MORA DA SE ZNA NAPAMET
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -66,6 +67,42 @@ Node* search(Node* root, int data) {
     }
     return search(root->right, data);
 }
+
+// NE MORA DA SE ZNA NAPAMET
+
+// Funkcija za brisanje čvora iz BST
+Node* deleteNode(Node* root, int data) {
+    if (root == NULL) return root;
+
+    if (data < root->data) {
+        root->left = deleteNode(root->left, data);
+    } else if (data > root->data) {
+        root->right = deleteNode(root->right, data);
+    } else {
+        // Čvor sa jednom ili nijednom decom
+        if (root->left == NULL) {
+            Node* temp = root->right;
+            free(root);
+            return temp;
+        } else if (root->right == NULL) {
+            Node* temp = root->left;
+            free(root);
+            return temp;
+        }
+
+        // Čvor sa dva deteta: uzmi inorder naslednika (najmanji u desnom podstablu)
+        Node* temp = findMin(root->right);
+
+        // Kopiraj inorder naslednikov sadržaj u ovaj čvor
+        root->data = temp->data;
+
+        // Obriši inorder naslednika
+        root->right = deleteNode(root->right, temp->data);
+    }
+
+    return root;
+}
+
 
 // Glavni program za testiranje
 int main() {
