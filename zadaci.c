@@ -259,3 +259,294 @@ int main() {
     return 0;
 }
 
+#define MAX 10
+
+typedef struct Stack {
+    int top;
+    int arr[MAX];
+} Stack;
+
+Stack* createStack() {
+    Stack* stack = (Stack*)malloc(sizeof(Stack));
+    stack->top = -1;
+    return stack;
+}
+
+int isFull(Stack* head) {
+   return head->top == MAX - 1;
+}
+
+int isEmpty(Stack* head) {
+    return head->top == -1;
+}
+
+void push(Stack* head, int data) {
+    if(isFull(head)) {
+        printf("Stack je vec pun");
+        return;
+    }
+    head->arr[++head->top] = data;
+}
+
+void pop(Stack* head) {
+    if(isEmpty(head)) {
+        printf("Stack je vec prazan");
+        return;
+    }
+    head->arr[head->top--];
+}
+
+typedef struct Node {
+    int data;
+    struct Node* next;
+} Node;
+
+typedef struct Queue {
+    Node* front, rear;
+} Queue;
+
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+Queue* createQueue() {
+    Queue* newQueue = (Queue*)malloc(sizeof(Queue));
+    newQueue->front = newQueue->rear = NULL;
+    return newQueue;
+}
+
+int isQueueEmpty(Queue* queue) {
+   return queue->front == NULL;
+}
+
+void enqueue(Queue* head, int data) {
+    Node* newNode = createNode(data);
+    if(head->rear == NULL) {
+        head->front = head->rear = newNode;
+        return;
+    }
+    head->rear->next = newNode;
+    head->rear = newNode;
+} 
+
+bool isPrime(int num) {
+    if (num <= 1) return false;
+    if (num == 2) return true;
+    if (num % 2 == 0) return false;
+    for (int i = 3; i * i <= num; i += 2) {
+        if (num % i == 0) return false;
+    }
+    return true;
+}
+
+void transfer(Stack* stack, Queue* queue) {
+    while (!isEmpty(stack)) {
+        int num = pop(stack);
+        if (isPrime(num)) {
+            enqueue(queue, num);
+        }
+    }
+}
+
+int main() {
+    Stack* stack = createStack();
+    Queue* queue = createQueue();
+
+    for(int i = 0; i < 10; i++) {
+        push(stack, rand());
+    }
+
+    transfer(stack, queue);
+}
+
+typedef struct Node {
+    int data;
+    Node* left;
+    Node* right;
+} Node;
+
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+Node* insert(Node* node, int data) {
+    if(node == NULL) {
+        return createNode(data);
+    }
+    if(data < node->data) {
+        return insert(node->left, data)
+    } else {
+        return insert(node->right, data)
+    }
+    return node;
+}
+
+void preorderTraversal(Node* node) {
+    if(node != NULL) {
+        printf("%d ", node->data);
+        preorderTraversal(node->left);
+        preorderTraversal(node->right);
+    }
+}
+
+void postorderTraversal(Node* node) {
+    if(node != NULL) {
+        postorderTraversal(node->left);
+        postorderTraversal(node->right);
+        printf("%d ", node->data);
+    }
+}
+// Funkcija za ručni unos čvorova u obično binarno stablo
+Node* createBinaryTree() {
+    int data;
+    printf("Unesite vrednost (-1 za kraj unosa): ");
+    scanf("%d", &data);
+    if (data == -1) return NULL;
+    Node* root = createNode(data);
+    printf("Unos levog deteta od %d\n", data);
+    root->left = createBinaryTree();
+    printf("Unos desnog deteta od %d\n", data);
+    root->right = createBinaryTree();
+    return root;
+}
+
+int main() {
+    Node* binaryTree = NULL;
+    Node* binarySearchTree = NULL;
+    int choice, data;
+
+    printf("Odaberite opciju:\n");
+    printf("1. Kreiraj obično binarno stablo\n");
+    printf("2. Kreiraj binarno stablo pretraživanja\n");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1:
+            printf("Kreiraj obično binarno stablo:\n");
+            binaryTree = createBinaryTree();
+            printf("Preorder ispis obicnog binarnog stabla:\n");
+            preorder(binaryTree);
+            printf("\n");
+            break;
+
+        case 2:
+            printf("Unesite elemente za binarno stablo pretraživanja (-1 za kraj unosa):\n");
+            while (1) {
+                scanf("%d", &data);
+                if (data == -1) break;
+                binarySearchTree = insertBST(binarySearchTree, data);
+            }
+            printf("Postorder ispis binarnog stabla pretraživanja:\n");
+            postorder(binarySearchTree);
+            printf("\n");
+            break;
+
+        default:
+            printf("Neispravan izbor!\n");
+    }
+
+    return 0;
+}
+
+typedef struct CNode {
+    int data;
+    struct CNode* next;
+} CNode;
+
+typedef struct DNode {
+    int data;
+    struct DNode* next;
+    struct DNode* prev;
+} DNode;
+
+CNode* createCNode(int data) {
+    CNode* newNode = (CNode*)malloc(sizeof(CNode));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+DNode* createDNode(int data) {
+    DNode* newNode = (DNode*)malloc(sizeof(DNode));
+    newNode->data = data;
+    newNode->prev = newNode->next = NULL;
+    return newNode;
+}
+
+void insertAtEnd(CNode* head, int data) {
+    CNode* newNode = createCNode(data)
+    if(head == NULL) {
+        head = newNode;
+        newNode->next = head;
+    } else {
+        CNode* temp = head;
+        while(temp->next != head) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->next = head;
+    }
+}
+
+void printCList(CNode* head) {
+    CNode* temp = head;
+    do {
+        temp = temp->next;
+    } while (temp != head);
+}
+
+DNode* convertToDList(CNode* head) {
+    if (head == NULL) return NULL;
+
+    DNode* dHead = NULL;
+    DNode* dTail = NULL;
+    CNode* temp = head;
+
+    do {
+        DNode* newNode = createDNode(temp->data);
+        if (dHead == NULL) {
+            dHead = newNode;
+            dTail = newNode;
+        } else {
+            dTail->next = newNode;
+            newNode->prev = dTail;
+            dTail = newNode;
+        }
+        temp = temp->next;
+    } while (temp != head);
+
+    return dHead;
+}
+
+void printDList(DNode* head) {
+    DNode* temp = head;
+    while (temp != NULL) {
+        temp = temp->next;
+    }
+}
+
+int main() {
+    CNode* cHead = NULL; 
+
+    insertAtEnd(&cHead, 10);
+    insertAtEnd(&cHead, 20);
+    insertAtEnd(&cHead, 30);
+    insertAtEnd(&cHead, 40);
+
+    printf("Kruzno ulančana lista:\n");
+    printCList(cHead);
+
+    DNode* dHead = convertToDList(cHead);
+
+    printf("Dvostruko ulančana lista:\n");
+    printDList(dHead);
+
+    return 0;
+}
+
