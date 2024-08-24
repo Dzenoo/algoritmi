@@ -550,3 +550,130 @@ int main() {
     return 0;
 }
 
+typedef struct Node {
+    int data;
+    struct Node* next;
+} Node;
+
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void insertFront(Node* head, int data) {
+    Node* newNode = createNode(data);
+    newNode->next = head;
+    head* = newNode;
+}
+
+void insertRear(Node* node, int data) {
+    if(node->next == NULL) {
+        node = createNode(data);
+        return;
+    }
+    Node* temp = head;
+    while(temp->next == NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+void printList(Node* node) {
+    if(node == NULL) {
+        return;
+    }
+    printf("%d ", node->data);
+}
+
+int searchNode(Node* head, int key) {
+    Node* temp = head;
+    int position = 0;
+    while(temp != NULL) {
+        if(temp->data == key) {
+            return position;
+        }
+        temp = temp->next;
+        position++;
+    }
+    return -1;
+}
+
+void sortList(Node* head) {
+    Node* current;
+    Node* nextNode;
+    int temp;
+    int swapped;
+
+    do { 
+        swapped = 0;
+        current = head;
+
+        while(current->head !== NULL) {
+            nextNode = current->next;
+            if(current->data > nextNode->data) {
+                temp = current->data;
+                current->data = nextNode->data;
+                nextNode->data = temp;
+                swapped = 1;
+            }
+            current = nextNode;
+        }
+    } while (swapped);
+}
+
+int main() {
+    Node* node = createNode();
+}
+
+typedef struct Stack {
+    int top;
+    int arr[MAX];
+} Stack;
+
+Stack* createStack() {
+    Stack* stack = (Stack*)malloc(sizeof(Stack));
+    stack->top = -1;
+    return stack;
+}
+
+int isFull(Stack* stack) {
+    return stack->top == MAX - 1;
+}
+
+int isEmpty(Stack* stack) {
+    return stack->top == -1;
+}
+
+void push(Stack* stack, int data) {
+    if(isFull(stack)) {
+        return;
+    }
+    stack->arr[++stack->top];
+}
+
+void pop(Stack* stack) {
+    if(isEmpty(stack)) {
+        return;
+    }
+    stack->arr[stack->top--];
+}
+
+int isOperator(char ch) {
+    return (ch == "+" || ch == "-" || ch == "*" || ch == "/" || ch == "^");
+}
+
+void infixToPrefix(char* infix, char* prefix, int* index) {
+    char ch = infix[index];
+    index--;
+
+    if(isOperator(ch)) {
+        infixToPrefix(infix, prefix, index);
+        infixToPrefix(infix, prefix, index);
+        strncat(prefix, &ch, 1);
+    } else {
+        strncat(prefix, &ch, 1);
+    }
+
+}
