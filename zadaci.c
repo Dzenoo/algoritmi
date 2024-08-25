@@ -1,4 +1,3 @@
-// 1 Zadatak
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -6,7 +5,6 @@
 
 #define MAX 100
 
-// STEK
 typedef struct Stack {
     int top;
     int array[MAX];
@@ -51,13 +49,11 @@ int peek(Stack* stack) {
     return stack->array[stack->top];
 }
 
-// LISTA
 typedef struct Node {
     int data;
     struct Node* next;
 } Node;
 
-// RED
 typedef struct Queue {
     Node* front;
     Node* rear;
@@ -109,7 +105,7 @@ int dequeue(Queue* queue) {
 void fillStackWithRandomNumbers(Stack* stack) {
     srand(time(0));
     for (int i = 0; i < MAX; i++) {
-        int num = rand() % 100 + 1; // Generiše broj između 1 i 100
+        int num = rand() % 100 + 1;
         push(stack, num);
     }
 }
@@ -145,14 +141,12 @@ int main() {
     }
     printf("\n");
 
-    // Oslobađanje memorije
     free(stack);
     free(queue);
 
     return 0;
 }
 
-// 2 Zadatak
 typedef struct DNode {
     int data;
     struct DNode* next;
@@ -237,10 +231,9 @@ void transferOddPositions(DNode* dHead, SNode* sHead) {
 }
 
 int main() {
-    DNode* dHead = NULL;  // Dvostruko ulančana lista
-    SNode* sHead = NULL;  // Jednostruko ulančana lista
+    DNode* dHead = NULL;  
+    SNode* sHead = NULL; 
 
-    // Dodavanje elemenata u dvostruko ulančanu listu
     insertAtEndD(&dHead, 10);
     insertAtEndD(&dHead, 20);
     insertAtEndD(&dHead, 30);
@@ -250,7 +243,6 @@ int main() {
     printf("Dvostruko ulančana lista:\n");
     printDList(dHead);
 
-    // Prebacivanje elemenata sa neparnih pozicija u jednostruko ulančanu listu
     transferOddPositions(dHead, &sHead);
 
     printf("Jednostruko ulančana lista sa elementima sa neparnih pozicija:\n");
@@ -402,7 +394,7 @@ void postorderTraversal(Node* node) {
         printf("%d ", node->data);
     }
 }
-// Funkcija za ručni unos čvorova u obično binarno stablo
+
 Node* createBinaryTree() {
     int data;
     printf("Unesite vrednost (-1 za kraj unosa): ");
@@ -859,4 +851,79 @@ int main() {
     enqueue(queue, 7);
 
     return 0;
+}
+
+typedef struct Deque {
+    int front, rear, size;
+    int arr[15];
+} Deque;
+
+Deque* createDeque() {
+    Deque* deque = (Deque*)malloc(sizeof(Deque));
+    deque->front = -1;
+    deque->rear = 0;
+    deque->size = 0;
+    return deque;
+}
+
+int isFull(Deque* deque) {
+    return deque->size == MAX;
+}
+
+int isEmpty(Deque* deque) {
+    return deque->size == 0;
+}
+
+void insertFront(Deque* deque, int data) {
+    if(isFull(deque)) {
+        return;
+    }
+    if(deque->front - 1) {
+        deque->front = 0;
+        deque->rear = 0;
+    } else if (deque->rear == 0) {
+        deque->rear = MAX - 1;
+    } else {
+        deque->front = deque->front - 1;
+    }
+    deque->arr[deque->rear] = data;
+    deque->size++;
+}
+
+void insertRear(Deque* deque, int data) {
+    if(isFull(deque)) {
+        return;
+    }
+    if(deque->front - 1) {
+        deque->front = 0;
+        deque->rear = 0;
+    } else if (deque->rear == MAX - 1) {
+        deque->rear = 0;
+    } else {
+        deque->rear = deque->rear + 1;
+    }
+    deque->arr[deque->front] = data;
+    deque->size++;
+}
+
+void delete(Deque* deque) {
+    if(isEmpty(deque)) {
+        return;
+    }
+    if(deque->front == deque->rear) {
+        deque->front = -1;
+        deque->rear = -1;
+    } else if (deque->rear == 0) {
+        deque->rear = MAX - 1;
+    } else {
+        deque->rear = deque->rear - 1;
+    }
+    deque->size--;
+}
+
+int get(Deque* deque) {
+    if(isEmpty(deque)) {
+        return;
+    }
+    return deque->arr[deque->rear];
 }
