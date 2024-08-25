@@ -36,21 +36,8 @@ int isEmpty(Deque* deque) {
     return deque->front == NULL;
 }
 
-// Funkcija za umetanje elementa na početak deka
-void insertFront(Deque* deque, int item) {
-    Node* newNode = createNode(item);
-    if (isEmpty(deque)) {
-        deque->front = deque->rear = newNode;
-    } else {
-        newNode->next = deque->front;
-        deque->front->prev = newNode;
-        deque->front = newNode;
-    }
-    printf("%d umetnuto na početak deka\n", item);
-}
-
 // Funkcija za umetanje elementa na kraj deka
-void insertRear(Deque* deque, int item) {
+void insert(Deque* deque, int item) {
     Node* newNode = createNode(item);
     if (isEmpty(deque)) {
         deque->front = deque->rear = newNode;
@@ -62,25 +49,8 @@ void insertRear(Deque* deque, int item) {
     printf("%d umetnuto na kraj deka\n", item);
 }
 
-// Funkcija za uklanjanje elementa sa početka deka
-void deleteFront(Deque* deque) {
-    if (isEmpty(deque)) {
-        printf("Dek je prazan\n");
-        return;
-    }
-    Node* temp = deque->front;
-    deque->front = deque->front->next;
-    if (deque->front == NULL) {
-        deque->rear = NULL;
-    } else {
-        deque->front->prev = NULL;
-    }
-    printf("%d uklonjeno sa početka deka\n", temp->data);
-    free(temp);
-}
-
 // Funkcija za uklanjanje elementa sa kraja deka
-void deleteRear(Deque* deque) {
+void delete(Deque* deque) {
     if (isEmpty(deque)) {
         printf("Dek je prazan\n");
         return;
@@ -96,16 +66,7 @@ void deleteRear(Deque* deque) {
     free(temp);
 }
 
-// Funkcija za vraćanje elementa sa početka deka bez uklanjanja
-int getFront(Deque* deque) {
-    if (isEmpty(deque)) {
-        printf("Dek je prazan\n");
-        return INT_MIN;
-    }
-    return deque->front->data;
-}
-
-int getRear(Deque* deque) {
+int get(Deque* deque) {
     if (isEmpty(deque)) {
         printf("Dek je prazan\n");
         return INT_MIN;
@@ -116,25 +77,15 @@ int getRear(Deque* deque) {
 int main() {
     Deque* deque = createDeque();
 
-    insertRear(deque, 5);
-    insertRear(deque, 10);
-    insertFront(deque, 15);
-    insertFront(deque, 20);
+    insert(deque, 5);
+    insert(deque, 10);
 
-    printf("Element na početku deka: %d\n", getFront(deque));
-    printf("Element na kraju deka: %d\n", getRear(deque));
+    printf("Element na kraju deka: %d\n", get(deque));
 
-    deleteFront(deque);
-    deleteRear(deque);
+    delete(deque);
 
-    printf("Element na početku deka: %d\n", getFront(deque));
-    printf("Element na kraju deka: %d\n", getRear(deque));
+    printf("Element na kraju deka: %d\n", get(deque));
 
-    // Oslobađanje memorije
-    while (!isEmpty(deque)) {
-        deleteFront(deque);
-    }
-    free(deque);
 
     return 0;
 }

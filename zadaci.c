@@ -677,3 +677,186 @@ void infixToPrefix(char* infix, char* prefix, int* index) {
     }
 
 }
+
+typedef struct Queue {
+    int front, rear, size;
+    int arr[size];
+} Queue;
+
+Queue* createQueue() {
+    Queue* newQueue = (Queue*)malloc(sizeof(Queue));
+    newQueue->front = newQueue->size = 0;
+    newQueue->rear = MAX - 1;
+    return newQueue;
+}
+
+int isFull(Queue* queue) {
+    return queue->size == MAX;
+}
+
+int isEmpty(Queue* queue) {
+    return queue->size == 0;
+}
+
+void enqueue(Queue* queue, int data) {
+    if(isFull(queue)) {
+        return;
+    }
+    queue->rear = (queue->rear + 1) % MAX
+    queue->array[queue->rear] = data;
+    queue->size++;
+}
+
+void dequeue(Queue* queue) {
+    if(isEmpty(queue)) {
+        return;
+    }
+    int item = queue->array[queue->front]; 
+    queue->front = (queue->front + 1) % MAX;
+    queue->size--; 
+}
+
+int main() {
+    Queue* queue1 = createQueue();
+    Queue* queue2 = createQueue();
+
+    int count = 0;
+    int num = 2018;
+    while(count < 11) {
+        enqueue(queue1, num);
+        num += 2018;
+        count++;
+    }
+
+    while(!isEmpty(queue1)) {
+        int value = dequeue(queue1);
+        if(value % 6 == 0) {
+            enqueue(queue2, value);
+        }
+    }
+
+    return 0;
+}
+
+typedef struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+} Node;
+
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    return newNode;
+}
+
+void insert(Node* head, int data) {
+    Node* newNode = createNode(data);
+    if(head == NULL) {
+        head* = createNode(data);
+    }
+    Node* temp = head;
+    while(temp->next == NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    newNode->prev = temp;
+}
+
+void print(Node* head) {
+    Node* temp = head;
+    while(temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+
+Node* lista_parnih(Node* head) {
+    Node* evenList = NULL;
+    Node* temp = head;
+
+    while(temp != NULL) {
+        if(temp->data % 2 == 0) {
+            insert(evenList, temp->data);
+        }
+    }
+    return evenList;
+}
+
+int main() {
+    Node* head  = NULL;
+    Node* evenList = NULL;
+
+    insert(head, 1);
+    insert(head, 2);
+    insert(head, 3);
+    insert(head, 4);
+    insert(head, 5);
+    insert(head, 6);
+    insert(head, 7);
+    insert(head, 8);
+
+    evenList = lista_parnih(head);
+
+    return 0;
+}
+
+typedef struct Queue {
+    int front, rear, size;
+    int array[size];
+} Queue;
+
+Queue* createQueue() {
+    Queue* newQueue = (Queue*)malloc(sizeof(Queue));
+    newQueue->front = newQueue->size = 0;
+    newQueue->rear = MAX - 1;
+    return newQueue;
+}
+
+int isFull(Queue* queue) {
+    return queue->size == MAX;
+}
+
+int isEmpty(Queue* queue) {
+    return queue->size == 0;
+}
+
+void enqueue(Queue* queue, int data) {
+    if(isFull(queue)) {
+        return;
+    }
+    queue->rear = (queue->rear - 1) % MAX;
+    queue->array[queue->rear] = data;
+    queue->size++;
+    sort(queue);
+}
+
+void sort(Queue* head) {
+    if(isEmpty(head)) {
+        return;
+    }
+    for(int i = head->front; i <= head->rear - 1; i++) {
+        for(int j = head->front; j <= head->rear; j++) {
+            if(q->array[j] < q->array[j + 1]) {
+                int temp = q->array[j];
+                q->array[j] = q->array[j + 1];
+                q->array[j + 1] = temp;
+            }
+        }
+    }
+
+}
+
+int main() {
+    Queue* queue = createQueue();
+
+    enqueue(queue, 5);
+    enqueue(queue, 3);
+    enqueue(queue, 8);
+    enqueue(queue, 1);
+    enqueue(queue, 7);
+
+    return 0;
+}

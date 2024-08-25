@@ -16,15 +16,8 @@ Node* createNode(int data) {
     return newNode;
 }
 
-// Funkcija za dodavanje čvora na početak liste
-void insertAtBeginning(Node** head, int data) {
-    Node* newNode = createNode(data);
-    newNode->next = *head;
-    *head = newNode;
-}
-
 // Funkcija za dodavanje čvora na kraj liste
-void insertAtEnd(Node** head, int data) {
+void insert(Node** head, int data) {
     Node* newNode = createNode(data);
     if (*head == NULL) {
         *head = newNode;
@@ -38,7 +31,7 @@ void insertAtEnd(Node** head, int data) {
 }
 
 // Funkcija za ispis liste
-void printList(Node* head) {
+void print(Node* head) {
     Node* temp = head;
     while (temp != NULL) {
         printf("%d -> ", temp->data);
@@ -136,9 +129,9 @@ int findMax(Node* head) {
 int main() {
     Node* head = NULL; // Inicijalizacija prazne liste
 
-    insertAtBeginning(&head, 10);
-    insertAtBeginning(&head, 20);
-    insertAtBeginning(&head, 30);
+    insert(&head, 10);
+    insert(&head, 20);
+    insert(&head, 30);
 
     printList(head); // Ispis liste
 
